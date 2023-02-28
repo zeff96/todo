@@ -61,12 +61,10 @@ const deleteItems = (listId) => {
 };
 
 const toggleCheck = (checkboxId, checked) => {
-  for (let i = 0; i < lists.length; i += 1) {
-    if (lists[i].index === checkboxId) {
-      if (checked === true) lists[i].completed = true;
-      else lists[i].completed = false;
-    }
-  }
+  lists.forEach((list) => {
+    if (list.index === checkboxId && checked === true) list.completed = true;
+    else list.completed = false;
+  });
 
   saveItems();
 };
@@ -97,7 +95,7 @@ const render = () => {
       const updateButton = document.createElement('button');
       updateButton.type = 'button';
       updateButton.innerHTML = '&#10003;';
-      updateButton.classList.add('updatebtn');
+      updateButton.className = 'updatebtn gray'
       updateButton.dataset.id = list.index;
 
       updateButton.addEventListener('click', (e) => {
@@ -119,7 +117,7 @@ const render = () => {
       const editButton = document.createElement('button');
       editButton.type = 'button';
       editButton.dataset.id = list.index;
-      editButton.classList.add('editbtn');
+      editButton.className = 'editbtn gray'
       editButton.innerHTML = '&#9998;';
 
       editButton.addEventListener('click', (e) => {
@@ -130,7 +128,7 @@ const render = () => {
 
       const deleteButton = document.createElement('button');
       deleteButton.type = 'button';
-      deleteButton.classList.add('deletebtn');
+      deleteButton.className = 'deletebtn gray'
       deleteButton.dataset.id = list.index;
       deleteButton.innerText = 'del';
       deleteButton.addEventListener('click', (e) => {
