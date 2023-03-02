@@ -49,24 +49,6 @@ body {
   outline: none;
 }
 
-.new-text {
-  width: 100%;
-  border: none;
-  padding: 0.3rem;
-  position: relative;
-}
-
-.updatebtn {
-  position: absolute;
-  right: 2%;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #fff;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
 .add-todo {
   position: absolute;
   padding: 0.5rem;
