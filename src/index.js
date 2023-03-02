@@ -6,7 +6,7 @@ import '@fortawesome/fontawesome-free/js/regular.js';
 import '@fortawesome/fontawesome-free/js/brands.js';
 
 const clearButton = document.querySelector('.btn');
-const list = document.querySelector('.list-items');
+const todos = document.querySelector('.list-container');
 const btn = document.querySelector('.add-todo');
 const addElem = document.querySelector('.add-list');
 
@@ -17,7 +17,7 @@ btn.addEventListener('click', () => {
     todoList.createItems(addElem.value);
     todoList.saveItems();
     todoList.resetIndex();
-    todoList.render(list);
+    todoList.render(todos);
     addElem.value = '';
   }
 });
@@ -28,24 +28,31 @@ addElem.addEventListener('keydown', (e) => {
       todoList.createItems(addElem.value);
       todoList.saveItems();
       todoList.resetIndex();
-      todoList.render(list);
+      todoList.render(todos);
       addElem.value = '';
     }
   }
 });
 
-list.addEventListener('click', (e) => {
+todos.addEventListener('click', (e) => {
   const target = e.target;
   if (target.className === 'deletebtn') {
     const id = Number(target.parentNode.id);
     todoList.deleteItems(id);
     todoList.resetIndex();
     todoList.saveItems();
-    todoList.render(list);
+    todoList.render(todos);
   };
+});
+
+clearButton.addEventListener('click', () => {
+  todoList.clearCompleted();
+  todoList.resetIndex();
+  todoList.saveItems();
+  todoList.render(todos);
 })
 
 document.addEventListener('DOMContentLoaded', () => {
   todoList.savedItems();
-  todoList.render(list);
+  todoList.render(todos);
 });

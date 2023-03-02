@@ -25,7 +25,7 @@ export class Node {
   render=(list) => {
     list.innerHTML = ''
     this.lists.forEach((todo) => {
-      const li = `  <div id="${todo.index}" class="list">
+      const li = `<div id="${todo.index}" class="list">
         <input 
           type="checkbox" 
           name="list" 
@@ -38,9 +38,50 @@ export class Node {
           class="text-node"
           value="${todo.description}"
         />
-        <button type="button" data-id="${todo.index}" class="deletebtn">del</button>  
+        <button 
+          type="button" 
+          data-id="${todo.index}" 
+          class="deletebtn"
+          >del
+        </button>  
       </div>`
       list.innerHTML += li;
+    });
+    const checkbox = document.querySelectorAll('.checkbox');
+
+    checkbox.forEach((check) => {
+      check.addEventListener('change', () => {
+        if (check.checked) {
+          this.lists = this.lists.map((list) => {
+            if (list.index === Number(check.parentNode.id)){
+              list.completed = true;
+            }
+            return list;
+          });
+          this.saveItems();
+        }else {
+          this.lists = this.lists.map((list) => {
+            if (list.index === Number(check.parentNode.id)){
+              list.completed = false;
+            }
+            return list;
+          });
+          this.saveItems();
+        };
+      });
+    });
+
+    const texts = document.querySelectorAll('.text-node');
+  
+    texts.forEach((text) => {
+      text.addEventListener('change', () => {
+        this.lists.forEach((list) => {
+          if (list.index === Number(text.id)) {
+            list.description = text.value;
+            this.saveItems();
+          };
+        });
+      });
     });
   };
 
@@ -51,6 +92,10 @@ export class Node {
       list.index = initialIndex;
       initialIndex += 1;
     });
+  };
+
+  clearCompleted = () => {
+    this.lists = this.lists.filter((list) => list.completed !== true);
   };
 
   saveItems = () => {
